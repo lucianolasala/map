@@ -12,7 +12,7 @@
     var bounds = [[-55.2,-74],[-21.7,-53.6]]; 
 
     // Add your raster image using L.imageOverlay
-    L.imageOverlay('custom_5L_reclassified.png', bounds, { zIndex: 1 }).addTo(map); // Use your raster image path
+    L.imageOverlay('custom_5L_reclassified.png', bounds).addTo(map); // Use your raster image path. , { zIndex: 1 }
 
     // Check if the image is loaded
     var img = new Image();
