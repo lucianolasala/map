@@ -1,47 +1,64 @@
-<script>
-    // Initialize the map
-    var map = L.map('map').setView([-38.4161, -63.6167], 4); // Set to the coordinates you need
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Map Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 100vh; /* Full height */
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([-38.4161, -63.6167], 4);
 
-    // Define bounds for your raster image
-    var bounds = [[-55.2,-74],[-21.7,-53.6]]; 
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
 
-    // Add your raster image using L.imageOverlay
-    L.imageOverlay('custom_5L_reclassified.png', bounds).addTo(map); // Use your raster image path. , { zIndex: 1 }
+        // Define bounds for your raster image
+        var bounds = [[-55.2, -74], [-21.7, -53.6]];
 
-    // Check if the image is loaded
-    var img = new Image();
-    img.src = 'custom_5L_reclassified.png';
-    img.onload = function() {
-        console.log('Image loaded successfully!');
-    }
-    img.onerror = function() {
-        console.log('Error loading image!');
-    }
+        // Add your raster image using L.imageOverlay
+        L.imageOverlay('custom_5L_reclassified.png', bounds).addTo(map);
 
-    // Load GeoJSON data for states
-    fetch('ARG_adm1.geojson') // Update this path to your GeoJSON file
-        .then(response => response.json())
-        .then(data => {
-            // Add the GeoJSON layer to the map
-            L.geoJSON(data, {
-                style: {
-                    color: 'blue',
-                    weight: 1,
-                    fillOpacity: 0
-                },
-                onEachFeature: function(feature, layer) {
-                    layer.bindPopup("State: " + feature.properties.NAME_1); // Adjust according to your properties
-                }
-            }).addTo(map);
-        })
-        .catch(err => console.error(err));
+        // Check if the image is loaded
+        var img = new Image();
+        img.src = 'custom_5L_reclassified.png';
+        img.onload = function() {
+            console.log('Image loaded successfully!');
+        }
+        img.onerror = function() {
+            console.log('Error loading image!');
+        }
 
-    // Add other controls or layers as needed
-</script>
+        // Load GeoJSON data for states
+        fetch('ARG_adm1.geojson')
+            .then(response => response.json())
+            .then(data => {
+                // Add the GeoJSON layer to the map
+                L.geoJSON(data, {
+                    style: {
+                        color: 'blue',
+                        weight: 1,
+                        fillOpacity: 0
+                    },
+                    onEachFeature: function(feature, layer) {
+                        layer.bindPopup("State: " + feature.properties.NAME_1);
+                    }
+                }).addTo(map);
+            })
+            .catch(err => console.error(err));
+    </script>
+</body>
+</html>
 
