@@ -3,37 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Leaflet Map Title</title>
+    <title>Wild Boar-Pigs Interaction Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        /* Adjust the height and width of the map */
-        #map {
-            height: 100vh; /* Full height of the viewport */
-            width: 100%;    /* Full width */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .leaflet-container {
+            height: 100vh !important; /* 100% of the viewport height */
+            width: 100% !important;
         }
     </style>
 </head>
 <body>
     <div id="map"></div> <!-- This div will hold your Leaflet map -->
 
-    <!-- Leaflet JavaScript library -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    
     <script>
         // Initialize the map
-        var map = L.map('map').setView([-34.61, -58.38], 10); // Replace with your desired latitude and longitude
+        var map = L.map('map').setView([-38.4161, -63.6167], 4); // Set to the coordinates you need
 
-        // Add a tile layer (OpenStreetMap in this case)
+        // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap'
         }).addTo(map);
 
-        // Add any additional layers or markers here
-        // Example marker
-        var marker = L.marker([-34.61, -58.38]).addTo(map); // Replace with your coordinates
-        marker.bindPopup("<b>Hello!</b><br>This is a marker.").openPopup();
+        // Define bounds for your raster image
+        var bounds = [[-55.0, -73.0], [-20.0, -53.0]]; // Adjust the coordinates to your raster's bounds
+
+        // Add your raster image using L.imageOverlay
+        L.imageOverlay('Wild boar-pigs interaction.png', bounds).addTo(map); // Use your raster image path
+
+        // Load GeoJSON data for states
+        fetch('ARG_adm1.geojson') // Update this path to your GeoJSON file
+            .then(response => response.json())
+            .then(data => {
+                // Add the GeoJSON layer to the map
+                L.geoJSON(data, {
+                    style: {
+                        color: 'blue',
+                        weight: 1,
+                        fillOpacity: 0
+                    },
+                    onEachFeature: function(feature, layer) {
+                        layer.bindPopup("State: " + feature.properties.NAME_1); // Adjust according to your properties
+                    }
+                }).addTo(map);
+            })
+            .catch(err => console.error(err));
+
+        // Add other controls or layers as needed
     </script>
 </body>
 </html>
-
