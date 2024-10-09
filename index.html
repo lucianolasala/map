@@ -27,8 +27,8 @@
         }).addTo(map);
 
         // Define bounds for your raster image
-        var bounds = [[-55.1026595279470968,-73.5720217698311956],[-21.7751624874174610,-53.6294224625600933]];
-
+        var bounds = [[-56, -75], [-21, -53]]; // Slightly expanded bounds
+        
         // Add your raster image using L.imageOverlay
         L.imageOverlay('custom_5L_reclassified.png', bounds, { zIndex: 1 }).addTo(map);
 
