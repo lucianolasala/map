@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Leaflet Map Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        /* Adjust the height and width of the map */
+        #map {
+            height: 100vh; /* Full height of the viewport */
+            width: 100%;    /* Full width */
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div> <!-- This div will hold your Leaflet map -->
+
+    <!-- Leaflet JavaScript library -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([-34.61, -58.38], 10); // Replace with your desired latitude and longitude
+
+        // Add a tile layer (OpenStreetMap in this case)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // Add any additional layers or markers here
+        // Example marker
+        var marker = L.marker([-34.61, -58.38]).addTo(map); // Replace with your coordinates
+        marker.bindPopup("<b>Hello!</b><br>This is a marker.").openPopup();
+    </script>
+</body>
+</html>
 
